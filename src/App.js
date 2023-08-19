@@ -19,6 +19,7 @@ import LoginPage from './Components/LoginPage';
 import SecondPage from './Components/SecondPage';
 import EnterFirstGame from './GameTypes/EnterFirstGame';
 import OTPPage from './Components/OTPPage';
+import SignUpPage from './Components/SignUpPage';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route exact path='/LoginPage' element={<LoginPage />}></Route>
           <Route exact path='/OTPPage' element={<OTPPage />} />
           <Route exact path='/UserPage' element={<UserPage />}></Route>
+          <Route exact path='/SignUpPage' element={<SignUpPage />}></Route>
           <Route exact path='/PlayPage' element={<PalyPage />}></Route>
           <Route exact path='/FirstGame' element={<FirstGame />}></Route>
           <Route exact path='/EnterFirstGame' element={<EnterFirstGame />}></Route>

@@ -550,3 +550,7 @@ background-image: url('/public/images/register-bg.png');
         font-size: 30px;
     }
 }
+
+.green-text {
+  color: green !important;
+}

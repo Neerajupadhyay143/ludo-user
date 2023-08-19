@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SignUpPage from './SignUpPage';
 
 function RegisterPage() {
   const [name, setName] = useState('');
@@ -70,7 +71,7 @@ function RegisterPage() {
   };
 
   const handleVerifyNumberClick = async () => {
-   
+
 
     try {
       const queryParams = {
@@ -98,8 +99,11 @@ function RegisterPage() {
         setIsVerifying(false);
         setShowOtpFields(false);
         setIsGetOtpDisabled(true);
-        
-        
+
+        if(response.status===200 && isEmailVerified){
+       navigate(<SignUpPage/>)
+
+        }
       }
     }
     catch (err) {
@@ -129,29 +133,29 @@ function RegisterPage() {
       startTimer();
     }
   };
- var interval
+  var interval
   var clearTimer = false;
   const startTimer = () => {
     let timer = 30;
-     interval = setInterval(() => {
+    interval = setInterval(() => {
       timer--;
-     
+
       setResendTimer(timer);
-      
-     
+      clearInterval(interval)
+
     }, 1000);
-    return;
+
   };
 
- 
+
 
   useEffect(() => {
     setIsGetOtpDisabled(
       !name.trim() ||
       !phoneNumber.trim() &&
-      !email.trim()||
+      !email.trim() ||
 
-      (showEmailField && !email) 
+      (showEmailField && !email)
 
     );
   }, [name, phoneNumber, email]);
@@ -180,7 +184,7 @@ function RegisterPage() {
                         type="text"
                         placeholder="Enter Your Name"
                         onChange={(e) => setName(e.target.value)}
-                       disabled={isOtpFieldsShown} // Disable the input field if OTP fields are shown
+                        disabled={isOtpFieldsShown} // Disable the input field if OTP fields are shown
                       />
                     </div>
                     <p style={{ color: 'red' }} > {nameError} </p>
@@ -203,7 +207,7 @@ function RegisterPage() {
                         <input
                           type="text"
                           placeholder="E-mail"
-                          
+
 
                           onChange={(e) => {
                             setEmail(e.target.value)
@@ -284,7 +288,10 @@ function RegisterPage() {
                     <div className="col-12 my-2">
                       {isVerifying ? (
                         <>
-                          <button className="bg-orange btn" onClick={handleVerifyNumberClick}>
+                          <button className="bg-orange btn" onClick={()=>{
+                          
+                            handleVerifyNumberClick()
+                            }}>
                             {isEmailVerified ? "Verify Email" : "Verify Number"}
                           </button>
 
