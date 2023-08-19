@@ -3,239 +3,58 @@ import HeaderComponent from '../Components/HeaderComponent';
 import { useNavigate } from 'react-router-dom';
 
 function FirstGame() {
+  const challenges = [
+    { id: 1, amount: 50 },
+    { id: 2, amount: 100 },
+    { id: 3, amount: 150 },
+    { id: 4, amount: 200 },
+    { id: 5, amount: 250 },
+    { id: 6, amount: 300 },
+    { id: 7, amount: 350 },
+    { id: 8, amount: 400 },
+    { id: 9, amount: 450 },
+    { id: 10, amount: 500 },
+  ];
     const navigate =useNavigate();
   return (
    <>
-          <section id="main-bg">
-  <div id="challenge-container" className="container mx-0">
-    <div className="row">
-      <div className="col-12">
-        <HeaderComponent/>
-          
-      </div>
-      <div className="col-12 my-3">
-      
-          <button type="button" className="btn btn-primary d-flex " onClick={()=>navigate('/PlayPage')}><span className="material-symbols-outlined mb-0">arrow_back</span>Back</button>
-      
-      </div>
-      <div className="col-12" id="your-challenge">
-        <div className="row">
-          <div className="col-12 my-2 ">
-            <h5 className="d-flex justify-content-center align-items-center text-yellow">
-              <span className="material-symbols-outlined mb-0">emoji_events</span>
-              <span>Your Open Challenges</span>
-              <span className="material-symbols-outlined">emoji_events</span>
-            </h5>
-          </div>
-          <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-            <div className="d-flex justify-content-between">
-              <h6 className="mx-2">Running Challenge With</h6>
-              <h6 className="mx-2 text-success"><strong>Rs 50</strong></h6>
+      <section id="main-bg">
+        <div id="challenge-container" className="container mx-0">
+          <div className="row">
+            <div className="col-12">
+              <HeaderComponent />
             </div>
-            <div className="card-body walletbody mt-2">
-              <div className="row">
-                <div className="col-12 d-flex justify-content-between">
-                  <div className="d-flex">
-                    <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                    <label className="mt-1" htmlFor><strong>Name</strong></label>
-                  </div>
-                  <div>
-                    <button className="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal1">View</button>
+            <div className="col-12 my-3">
+              <button
+                type="button"
+                className="btn btn-primary d-flex "
+                onClick={() => navigate('/PlayPage')}
+              >
+                <span className="material-symbols-outlined mb-0">arrow_back</span>Back
+              </button>
+            </div>
+            {challenges.map(challenge => (
+              <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white" key={challenge.id}>
+                <h6 className="mx-2">Currently Playing:2064</h6>
+                <div className="card-body walletbody mt-2">
+                  <div className="row">
+                    <div className="col-12 d-flex justify-content-between">
+                      <div className="d-flex">
+                        <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt="" />
+                        <label className="mt-1"><strong> Rs {challenge.amount}</strong></label>
+                      </div>
+                      <div>
+                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')}>Play</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <hr className="my-4 text-warning" />
-      </div>
-      <div className="col-12 my-2 ">
-        <h5 className="d-flex justify-content-center align-items-center text-yellow">
-          <span className="material-symbols-outlined mb-0">emoji_events</span>
-          <span>Challenges</span>
-          <span className="material-symbols-outlined">emoji_events</span>
-        </h5>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2062</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 50</strong></label>
-              </div>
-              <div>
               
-                  <button className="btn bg-orange" onClick={()=>navigate('/EnterFirstGame')}>Play</button>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2063</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 100</strong></label>
-              </div>
-              <div>
-                
-                      <button className="btn bg-orange" onClick={() =>navigate('/EnterFirstGame')}>Play</button>
-               
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2064</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 150</strong></label>
-              </div>
-              <div>
-                
-                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')}>Play</button>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2064</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 200</strong></label>
-              </div>
-              <div>
-                
-                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')}>Play</button>
-               
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2064</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 250</strong></label>
-              </div>
-              <div>
-               
-                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')}>Play</button>
-              
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2064</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 300</strong></label>
-              </div>
-              <div>
-                
-                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')}>Play</button>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2064</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 350</strong></label>
-              </div>
-              <div>
-                
-                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')}>Play</button>
-              
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2064</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 400</strong></label>
-              </div>
-              <div>
+            ))}
             
-                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')}>Play</button>
-               
-              </div>
-            </div>
           </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2064</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 450</strong></label>
-              </div>
-              <div>
-                
-                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')} >Play</button>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white">
-        <h6 className="mx-2">Currently Playing:2064</h6>
-        <div className="card-body walletbody mt-2">
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between">
-              <div className="d-flex">
-                <img src="./images/challenge-cup.png" className="mx-2 cup-img" alt />
-                <label className="mt-1" htmlFor><strong> Rs 500</strong></label>
-              </div>
-              <div>
-                        <button className="btn bg-orange" onClick={() => navigate('/EnterFirstGame')}>Play</button>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     {/* Modal */}
     <div className="modal fade" id="exampleModal1" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div className="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
