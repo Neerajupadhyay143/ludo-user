@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -6,11 +5,11 @@ import axios from 'axios';
 function RegisterPage() {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
   const [referCode, setReferCode] = useState('');
   const [otpInputs, setOtpInputs] = useState(['', '', '', '']);
   const [showOtpFields, setShowOtpFields] = useState(false);
-  const [resendTimer, setResendTimer] = useState(0);
+  const [resendTimer, setResendTimer] = useState(30);
   const [isOtpFieldsShown, setIsOtpFieldsShown] = useState(false);
   const [nameError, setNameError] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
@@ -19,11 +18,12 @@ function RegisterPage() {
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [showEmailField, setShowEmailField] = useState(false);
   const [isGetOtpDisabled, setIsGetOtpDisabled] = useState(true); // Add state for Get OTP button
+
+
   const baseURL = "https://misty-pelican.cyclic.cloud/api/v1"
   const navigate = useNavigate();
 
   const handleGetOtpClick = async () => {
-
     if (!name.trim()) {
       setNameError('Please enter your name');
       return;
@@ -32,32 +32,31 @@ function RegisterPage() {
       setPhoneNumberError('Please enter your phone number');
       return;
     }
-    if (phoneNumber.length != 10) {
-      setPhoneNumberError("The phone number should be of length 10")
+    if (phoneNumber.length !== 10) {
+      setPhoneNumberError("The phone number should be of length 10");
       return;
     }
+
     setIsOtpFieldsShown(true);
     setShowOtpFields(true);
-    startTimer();
     setIsVerifying(true);
-    setIsGetOtpDisabled(true);
+    startTimer();
 
     try {
       const queryParams = {
-
         mode: isPhoneNumberVerified ? 'email' : "phone",
       };
 
       const requestBody = {
         phone: "91" + phoneNumber,
-        OTP: otpInputs,
+        OTP: otpInputs.join(""),
         email: email,
         role: 'basic'
       };
       console.log(requestBody.phone);
       const response = await axios.post(baseURL + '/user/otp', requestBody, {
         params: queryParams,
-      })
+      });
 
       console.log(response);
       console.log("name", response.name);
@@ -65,22 +64,17 @@ function RegisterPage() {
       if (response.data) {
         setIsVerifying(true);
       }
-
-    }
-    catch (err) {
-      console.log(err)
-
+    } catch (err) {
+      console.log(err);
     }
   };
 
-
-
-
-
   const handleVerifyNumberClick = async () => {
+   
+
     try {
       const queryParams = {
-        mode: isPhoneNumberVerified ? 'phone' : "email",
+        mode: isPhoneNumberVerified ? 'Email' : "phone",
       }
 
       const requestBody = {
@@ -95,24 +89,26 @@ function RegisterPage() {
       })
 
       console.log(response);
-      console.log("name", response.status);
+      console.log("name", response);
 
       if (response.status === 200) {
         setIsPhoneNumberVerified(true);
         setShowEmailField(true);
         setIsEmailVerified(true);
+        setIsVerifying(false);
         setShowOtpFields(false);
+        setIsGetOtpDisabled(true);
+        
+        
       }
-
     }
-
-
     catch (err) {
       console.log(err);
       // Enable the Get OTP button
     }
 
     // Add your logic for verifying the number here
+
   };
 
   // Handle timer expiry
@@ -121,45 +117,44 @@ function RegisterPage() {
       // Perform the "Get OTP" functionality here
       // console.log("Performing Get OTP functionality");
       // handleGetOtpClick();
-      setIsGetOtpDisabled(false);
+      // setIsGetOtpDisabled(false);
     }
   };
 
 
   const handleResendClick = () => {
-    setResendTimer(30);
-    handleGetOtpClick();
-    startTimer();
-    if (showOtpFields) {
+    if (resendTimer === 0) {
+      handleGetOtpClick();
+      setResendTimer(30);
       startTimer();
     }
   };
-
-
+ var interval
+  var clearTimer = false;
   const startTimer = () => {
     let timer = 30;
-    const interval = setInterval(() => {
+     interval = setInterval(() => {
       timer--;
+     
       setResendTimer(timer);
-      if (timer <= 0) {
-        clearInterval(interval);
-        handleTimerExpiry();
-      }
+      
+     
     }, 1000);
+    return;
   };
 
-  useEffect(() => {
-    if (resendTimer === 0) {
-      // Handle timer expiration here
-      handleTimerExpiry();
-    }
-  }, [resendTimer]);
+ 
 
   useEffect(() => {
     setIsGetOtpDisabled(
-      !name.trim() || (isPhoneNumberVerified) || isOtpFieldsShown
+      !name.trim() ||
+      !phoneNumber.trim() &&
+      !email.trim()||
+
+      (showEmailField && !email) 
+
     );
-  }, [name, phoneNumber, isPhoneNumberVerified, isOtpFieldsShown]);
+  }, [name, phoneNumber, email]);
 
   const handleInputChange = (index, value) => {
     // Create a new array with the updated value at the specified index
@@ -167,6 +162,9 @@ function RegisterPage() {
     updatedValues[index] = value;
     setOtpInputs(updatedValues);
   };
+
+
+  console.log(isGetOtpDisabled);
   return (
     <>
       <section id="main-bg">
@@ -182,7 +180,7 @@ function RegisterPage() {
                         type="text"
                         placeholder="Enter Your Name"
                         onChange={(e) => setName(e.target.value)}
-                        disabled={isOtpFieldsShown} // Disable the input field if OTP fields are shown
+                       disabled={isOtpFieldsShown} // Disable the input field if OTP fields are shown
                       />
                     </div>
                     <p style={{ color: 'red' }} > {nameError} </p>
@@ -205,8 +203,11 @@ function RegisterPage() {
                         <input
                           type="text"
                           placeholder="E-mail"
-                          onChange={(e) => setEmail(e.target.value)}
+                          
 
+                          onChange={(e) => {
+                            setEmail(e.target.value)
+                          }}
                         />
                       </div>
                     )}
@@ -223,7 +224,6 @@ function RegisterPage() {
                               type="text"
                               maxLength={1}
                               style={{ outline: 'none', border: 'none', width: '100%' }}
-
                             />
                           </div>
                           <div className="card card-body p-0 mx-1">
@@ -235,7 +235,6 @@ function RegisterPage() {
                               onChange={(e) => handleInputChange(1, e.target.value)}
                               maxLength={1}
                               style={{ outline: 'none', border: 'none', width: '100%' }}
-
                             />
                           </div>
                           <div className="card card-body p-0 mx-1">
@@ -333,3 +332,6 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
+
+
+
