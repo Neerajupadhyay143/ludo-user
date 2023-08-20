@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import HeaderComponent from './HeaderComponent';
 import { useNavigate } from 'react-router-dom';
+import "./bootstrap.css"
+
 
 function SecondPage() {
   const [sliderValue, setSliderValue] = useState(50); // Initial slider value
@@ -113,7 +115,7 @@ function SecondPage() {
             </div>
             <div className="col-12 my-2 bg-purple2 py-3">
               <div className="row">
-                <div className="col-12 mb-3 d-flex justify-content-between text-light">
+                <div className="col-12 mb-3 d-flex justify-content-be tween text-light">
                   <div className="d-flex">
                     <h6 className="mb-0"><i className="bi bi-x-circle-fill text-danger" /> Running Battles</h6>
                   </div>
@@ -144,7 +146,48 @@ function SecondPage() {
                     </div>
                   </div>
                 ))}
+
+                
+
               </div>
+
+
+            </div>
+            <div className="col-12 my-2 bg-purple2 py-3">
+              <div className="row">
+                <div className="col-12 mb-3 d-flex justify-content-be tween text-light">
+                  <div className="d-flex">
+                    <h6 className="mb-0"><i className="bi bi-x-circle-fill text-danger" /> Create Battles</h6>
+                  </div>
+                </div>
+                
+                  <div className="col-12 card my-1 walletcard pt-2 px-0 mx-auto text-white" >
+                    <div className="row">
+                      <div className="col">
+                        <h6 className="mx-2 mb-0 d-flex">PLAYING FOR </h6>
+                      </div>
+                      
+                    </div>
+                    <div className="card-body walletbody mt-2">
+                      <div className="row">
+                      <div className="col-12 my-2">
+                        <input
+                          type="text"
+                          placeholder="Enter Your Name"
+                          // onChange={(e) => setName(e.target.value)}
+                          // disabled={isOtpFieldsShown} // Disable the input field if OTP fields are shown
+                        />
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                
+
+
+
+              </div>
+
+
             </div>
           </div>
         </div>
