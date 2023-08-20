@@ -97,6 +97,16 @@ background-image: url('/public/images/register-bg.png');
     color: rgb(14, 12, 12);
 }
 
+.create-battles-input{
+     background-color: #dbdbdb;
+    border: none;
+    outline: none;
+    padding: 3%;
+    border-radius: 5px;
+    width: 100%;
+    font-weight: 600;
+    color: rgb(14, 12, 12);
+}
 .text-orange {
     color: #FD7014;
 }
@@ -107,7 +117,23 @@ background-image: url('/public/images/register-bg.png');
     width: 100%;
     font-weight: 600 !important;
 }
+.bg-orange-create-battles-button {
+    right: 1;
+    background-color: #FD7014 !important;
+    color: white !important;
+    width: 40% !important;
+    font-weight: 600 !important;
+}
+.scroll-container {
+  max-height: 250px; /* Adjust this value as needed */
+  overflow-y: auto;
+  scrollbar-width: none; /* Hide scrollbar on Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar on IE and Edge */
+}
 
+.scroll-container::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar on Chrome and Safari */
+}
 /* navbar */
 
 #navbar-container {
@@ -249,6 +275,11 @@ background-image: url('/public/images/register-bg.png');
     max-width: 550px;
     height: 100vh;
     overflow-y: auto;
+      scrollbar-width: none !important; /* Hide scrollbar on Firefox */
+  -ms-overflow-style: none !important; /* Hide scrollbar on IE and Edge */
+}
+.challenge-conatiner::-webkit-scrollbar {
+  width: 0 !important; /* Hide scrollbar on Chrome and Safari */
 }
 
 .cup-img {
