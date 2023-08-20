@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import axios from 'axios';
+import { baseURL } from './RegisterPage';
 function LoginPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+   
 
     const handleValidation = () => {
         // Reset previous error messages
@@ -31,7 +34,7 @@ function LoginPage() {
     };
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Reset previous error messages
         setEmailError('');
@@ -53,6 +56,26 @@ function LoginPage() {
             // Validation passed, proceed with form submission logic
             console.log('Form submitted successfully');
         }
+
+        const body ={
+            email:email,
+            password: password
+        }
+        try{
+            const response = await axios.post(baseURL +'/user/login',body) 
+            console.log(response)
+
+
+            if (response.status === 200) {
+                navigate('/UserPage')
+            }
+        }
+        catch(err){
+            console.error(err);
+
+
+        }
+
     };
     return (
         <>
@@ -81,7 +104,7 @@ function LoginPage() {
                                     </div>
                                     <div className="col-12 my-2">
                                         <a href>
-                                            <button type='submit' className="bg-orange btn" onClick={handleSubmit}>Submit</button>
+                                            <button type='submit' className="bg-orange btn" onClick={handleSubmit}>Login </button>
                                         </a>
                                     </div>
                                     <div className="col-12 my-2">
