@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SignUpPage from './SignUpPage';
-
+export const baseURL = "https://misty-pelican.cyclic.cloud/api/v1"
 
 function RegisterPage() {
   const [name, setName] = useState('');
@@ -21,7 +21,7 @@ function RegisterPage() {
   const [showEmailField, setShowEmailField] = useState(false);
   const [isGetOtpDisabled, setIsGetOtpDisabled] = useState(true); // Add state for Get OTP button
 
-  const baseURL = "https://misty-pelican.cyclic.cloud/api/v1"
+
   const navigate = useNavigate();
 
 
@@ -48,7 +48,7 @@ function RegisterPage() {
       const queryParams = {
         mode: isPhoneNumberVerified ? 'email' : "phone",
       };
-      console.log("otpmode",queryParams.mode)
+      console.log("otpmode", queryParams.mode)
 
       const requestBody = {
         phone: "91" + phoneNumber,
@@ -78,7 +78,7 @@ function RegisterPage() {
       const queryParams = {
         mode: isPhoneNumberVerified ? 'email' : "phone",
       }
-      console.log("mode",queryParams.mode)
+      console.log("mode", queryParams.mode)
       const requestBody = {
         phone: "91" + phoneNumber,
         OTP: otpInputs,
@@ -90,7 +90,7 @@ function RegisterPage() {
         params: queryParams,
       })
 
-      console.log(response);
+      console.log(response.data.data.accessToken);
       console.log("name", response);
 
       if (response.status === 200) {
@@ -103,6 +103,7 @@ function RegisterPage() {
 
         if (response.status === 200 && isEmailVerified) {
           navigate(`/SignUpPage?name=${name}&phoneNumber=${phoneNumber}&email=${email}`);
+          localStorage.setItem('access_token', response.data.data.accessToken);
         }
       }
     }
@@ -122,6 +123,7 @@ function RegisterPage() {
       // console.log("Performing Get OTP functionality");
       // handleGetOtpClick();
       // setIsGetOtpDisabled(false);
+      clearInterval(interval)
     }
   };
 
@@ -141,7 +143,9 @@ function RegisterPage() {
       timer--;
 
       setResendTimer(timer);
+      handleTimerExpiry();
       clearInterval(interval)
+
 
     }, 1000);
 

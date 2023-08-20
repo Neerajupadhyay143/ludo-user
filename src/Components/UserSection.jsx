@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./style.css"
 import "./bootstrap.css"
 import {  useNavigate } from 'react-router-dom';
+import { AuthContext } from '../App';
 
 
 function UserSection() {
+
+    const {user}=useContext(AuthContext);
     const navigate = useNavigate();
 
     return (
@@ -18,9 +21,9 @@ function UserSection() {
                                 <img src="./images/img.jpg" className="rounded-circle" style={{ width: '100%' }} alt />
                             </div>
                             <div id="profile-info-bg">
-                                <h5 className=" text-light pt-2 mb-0 ms-5">Dominic</h5>
-                                <p className="text-light ms-5 mb-0">Pro member</p>
-                                <h6 className="text-light ms-5 rounded-pill " id="profile-id">abcd678</h6>
+                                <h5 className=" text-light pt-2 mb-0 ms-5">{user.name}</h5>
+                                <p className="text-light ms-5 mb-0">{user.memberType}</p>
+                                <h6 className="text-light ms-5 rounded-pill " id="profile-id">{user.userID}</h6>
                             </div>
                         </div>
                        

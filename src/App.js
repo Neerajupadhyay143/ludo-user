@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createContext, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import UserPage from './Components/UserPage';
 import WalletPage from './Components/WalletPage';
@@ -21,13 +21,21 @@ import EnterFirstGame from './GameTypes/EnterFirstGame';
 import OTPPage from './Components/OTPPage';
 import SignUpPage from './Components/SignUpPage';
 
-
+export const AuthContext = createContext()
 function App() {
+
+  
+ 
+const[user,setUser]=useState({
+  name:'',
+  memberType:'',
+  userID:''
+})
   return (
     <>
+<AuthContext.Provider value={{user,setUser}}>
 
       <BrowserRouter>
-
         <Routes>
           <Route exact path='/' element={<MainPage />}></Route>
           <Route exact path='/RegisterPage' element={<RegisterPage />}></Route>
@@ -50,8 +58,9 @@ function App() {
           <Route exact path='/AddChipsPage' element={<AddChipsPage />}></Route>
           <Route exact path='/WithDrawPage' element={<WithDrawPage />}></Route>
 
-        </Routes>
-      </BrowserRouter>
+         </Routes>
+         </BrowserRouter>
+      </AuthContext.Provider>
     </>
   )
 }
