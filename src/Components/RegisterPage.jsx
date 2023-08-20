@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SignUpPage from './SignUpPage';
 
+
 function RegisterPage() {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -20,9 +21,9 @@ function RegisterPage() {
   const [showEmailField, setShowEmailField] = useState(false);
   const [isGetOtpDisabled, setIsGetOtpDisabled] = useState(true); // Add state for Get OTP button
 
-
   const baseURL = "https://misty-pelican.cyclic.cloud/api/v1"
   const navigate = useNavigate();
+
 
   const handleGetOtpClick = async () => {
     if (!name.trim()) {
@@ -47,6 +48,7 @@ function RegisterPage() {
       const queryParams = {
         mode: isPhoneNumberVerified ? 'email' : "phone",
       };
+      console.log("otpmode",queryParams.mode)
 
       const requestBody = {
         phone: "91" + phoneNumber,
@@ -55,11 +57,12 @@ function RegisterPage() {
         role: 'basic'
       };
       console.log(requestBody.phone);
+
       const response = await axios.post(baseURL + '/user/otp', requestBody, {
         params: queryParams,
       });
 
-      console.log(response);
+      console.log(response.data);
       console.log("name", response.name);
 
       if (response.data) {
@@ -71,13 +74,11 @@ function RegisterPage() {
   };
 
   const handleVerifyNumberClick = async () => {
-
-
     try {
       const queryParams = {
-        mode: isPhoneNumberVerified ? 'Email' : "phone",
+        mode: isPhoneNumberVerified ? 'email' : "phone",
       }
-
+      console.log("mode",queryParams.mode)
       const requestBody = {
         phone: "91" + phoneNumber,
         OTP: otpInputs,
@@ -100,9 +101,8 @@ function RegisterPage() {
         setShowOtpFields(false);
         setIsGetOtpDisabled(true);
 
-        if(response.status===200 && isEmailVerified){
-       navigate(<SignUpPage/>)
-
+        if (response.status === 200 && isEmailVerified) {
+          navigate(`/SignUpPage?name=${name}&phoneNumber=${phoneNumber}&email=${email}`);
         }
       }
     }
@@ -168,7 +168,7 @@ function RegisterPage() {
   };
 
 
-  console.log(isGetOtpDisabled);
+
   return (
     <>
       <section id="main-bg">
@@ -288,10 +288,9 @@ function RegisterPage() {
                     <div className="col-12 my-2">
                       {isVerifying ? (
                         <>
-                          <button className="bg-orange btn" onClick={()=>{
-                          
+                          <button className="bg-orange btn" onClick={() => {
                             handleVerifyNumberClick()
-                            }}>
+                          }}>
                             {isEmailVerified ? "Verify Email" : "Verify Number"}
                           </button>
 
