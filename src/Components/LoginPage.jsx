@@ -63,7 +63,8 @@ function LoginPage() {
         }
         try{
             const response = await axios.post(baseURL +'/user/login',body) 
-            console.log(response)
+            console.log(response.data.data.token)
+            localStorage.setItem('access_token', response.data.data.token);
 
 
             if (response.status === 200) {
